@@ -159,6 +159,8 @@ module Sprockets
     #   compile("application.js")
     #
     def compile(*args)
+      start_time = Time.now
+      puts "[sprockets][#{start_time}] compile start"
       unless environment
         raise Error, "manifest requires environment for compilation"
       end
@@ -205,6 +207,8 @@ module Sprockets
       concurrent_exporters.each(&:wait!)
       save
 
+      end_time = Time.now
+      puts "[sprockets][#{end_time}] compile end"
       filenames
     end
 

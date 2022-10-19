@@ -22,6 +22,7 @@ module Sprockets
     #
     # The String Asset URI is returned or nil if no results are found.
     def resolve(path, load_paths: config[:paths], accept: nil, pipeline: nil, base_path: nil)
+      start_time = Time.now
       paths = load_paths
 
       if valid_asset_uri?(path)
@@ -37,6 +38,10 @@ module Sprockets
       if filename
         uri = build_asset_uri(filename, type: type, pipeline: pipeline || path_pipeline, index_alias: index_alias)
       end
+
+      end_time = Time.now
+      duration = BigDecimal("#{end_time - start_time}").to_s("F")
+      puts "[sprockets][#{end_time}] #{path}, #{duration}"
 
       return uri, deps
     end
